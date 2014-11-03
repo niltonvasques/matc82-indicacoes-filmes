@@ -4,6 +4,8 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="res/css/bootstrap.min.css">
 	<link rel="stylesheet" href="res/css/styles.css">
+
+	<script src="res/js/filmes.js" type="text/javascript"></script>
 	
 	<title>Sugestões de Filmes</title>
 </head>
@@ -13,7 +15,7 @@
 			<h1 id="title">Sugestões de Filmes</h1>
 			<h4>Quer assistir um filme e não sabe qual?</h4>
 		</div>
-		<form id="search" class="form-vertical" method="get">
+		<form id="search" class="form-vertical" onsubmit="return false" role="form">
 			<div id="search" class="form-group" >
 				<div class="row">
 					<div class="col-sm-5">
@@ -62,9 +64,10 @@
 			</div>
 		</form>
 		
-		<div id="resultados" class="container">
-		
-		</div>
+		<table class="table table-stripped table-bordered">
+			<thead id="resultados-header"></thead>
+			<tbody id="resultados-body"></tbody>
+		</table>
 	</div>
 </body>
 </html>

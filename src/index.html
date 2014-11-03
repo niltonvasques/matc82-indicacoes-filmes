@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="res/css/bootstrap.min.css">
+	<link rel="stylesheet" href="res/css/styles.css">
+	
+	<title>Sugestões de Filmes</title>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<h1 id="title">Sugestões de Filmes</h1>
+			<h4>Quer assistir um filme e não sabe qual?</h4>
+		</div>
+		<form id="search" class="form-vertical" method="get">
+			<div id="search" class="form-group" >
+				<div class="row">
+					<div class="col-sm-5">
+						<p>Ano</p>
+						<input id="ano" class="form-control" type="text">
+					</div>
+					<div class="col-sm-5">
+						<p>Categoria</p>
+						<select id="categoria" name="Categoria" type="text">
+							 <option value="Ação">Ação</option>
+							 <option value="Ficção">Ficção</option>
+							 <option value="Drama">Drama</option>
+							 <option value="Comédia">Comédia</option>
+							 <option value="Terror">Terror</option>
+							 <option value="Musical">Musical</option>
+							 <option value="Documentário">Documentário</option>
+							 <option value="Épico">Épico</option>
+							 <option value="Aventura">Aventura</option>
+							 <option value="Suspense">Suspense</option>
+							 <option value="Faroeste">Faroeste</option>
+							 <option value="Romance">Romance</option>
+							 <option value="Policial">Policial</option>
+							 <option value="Guerra">Guerra</option>
+							 <option value="Clássico">Clássico</option>
+							 <option value="Animação">Animação</option>
+							 <option value="Infantil">Infantil</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-5">
+						<p>Atores</p>
+						<input id="atores" class="form-control" type="text">
+					</div>
+					<div class="col-sm-5">
+						<p>Informações</p>
+						<input id="informacoes" class="form-control" type="text">
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-sm-1">
+						<button id="indica" onclick="listaFilmes()" class="btn btn-default" type="submit" >Indicamos</button>
+					</div>
+				</div>
+			</div>
+		</form>
+		
+		<div id="resultados" class="container">
+		
+		</div>
+	</div>
+</body>
+</html>

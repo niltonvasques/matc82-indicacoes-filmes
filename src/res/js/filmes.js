@@ -4,8 +4,8 @@ var database = null;
 function listaFilmes(){
 	var anoField 		= "Ano: " + $('#ano').val();
 	var categoriaField 	= $( '#categoria' ).val();
-	var atoresField 	= $( '#atores' ).val();
-	var informacoesField 	= $( '#informacoes' ).val();
+	var atoresField 	= $( '#atores' ).val().split(",");
+	var informacoesField 	= $( '#informacoes' ).val().split(" ");
 
 	if(database == null){
 		progress.showPleaseWait();
@@ -13,8 +13,13 @@ function listaFilmes(){
 	}else{
 	        document.getElementById("resultados-header").innerHTML = "<th>NOME</th><th>DESCRIÇÃO</th>";
 		$( '#resultados-body' ).empty();
-		var divs = $('div', database);
-		divs.each( function( index, element ){
+		
+/*
+*		Varrendo toda a lista de filmes, através do parser do html.
+*/
+		$('div', database).each( 
+			function( index, element ){
+				var sinopse = $( '.sinopsis', element ).first().text();
 				var elementAno = $( 'p', element ).first().text();
 				var nome = $( 'h2', element ).text();
 				var img = $( 'img', element ).first();
@@ -28,17 +33,40 @@ function listaFilmes(){
 				var ulAtores = $( '.actors', element );
 				var atores = [];
 				$( 'li', ulAtores).each( function( aIndex, aElement ){
-					atores.push( aElement.textContent );
+					atores.push( aElement.textContent.toUpperCase() );
 				});
-
-				if( elementAno.contains( anoField ) && 
-					$.inArray(categoriaField, categorias) != -1){
+/*
+*				Necessário criar a lógica para filtragem melhor dos filmes.
+*				Permitindo campos vazios e adição de aleatóriedade.
+*/				
+				if( 	elementAno.contains( anoField ) && 
+					filter_categories( categoriaField, categorias ) &&
+					filter_actors( atoresField, atores ) > 0 &&
+					sinopse.contains( informacoesField ) 
+				){
 					console.log(elementAno + " == "+ anoField );
 					$( '#resultados-body' ).append( element.outerHTML );
 				}
 			}
 		);
 	}
+}
+
+function filter_actors( actors, movieActors ){
+	if( actors.length == 1 && actors[0] == "" ) return 1;
+
+	var count = 0;
+	$.each( actors, function ( index, value ){
+		$.each( movieActors, function( mIndex, mValue ){
+			if( mValue.toUpperCase().trim().contains( value.toUpperCase().trim() ) ) count++;
+		});
+	});
+	return count;
+}
+
+function filter_categories( categoriaField, categorias ){
+	if( categoriaField == "Todas" ) return true;
+	return $.inArray( categoriaField, categorias ) != -1;
 }
 
 function load_database(){

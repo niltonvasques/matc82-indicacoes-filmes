@@ -11,7 +11,7 @@ function listaFilmes(){
 		progress.showPleaseWait();
 		setTimeout(function(){load_database();}, 1000);
 	}else{
-	        document.getElementById("resultados-header").innerHTML = "<th>NOME</th><th>DESCRIÇÃO</th>";
+	        document.getElementById("resultados-header").innerHTML = "<th>CAPA</th><th>DESCRIÇÃO</th>";
 		$( '#resultados-body' ).empty();
 		
 /*
@@ -19,12 +19,11 @@ function listaFilmes(){
 */
 		$('div', database).each( 
 			function( index, element ){
-				
+				var id 	= element.id;	
 				var sinopse = $( '.sinopsis', element ).first().text();
 				var elementAno = $( 'p', element ).first().text();
 				var nome = $( 'h2', element ).text();
-				var img = $( 'img', element ).first();
-				var trailer = trailerYoutube(nome);
+				var img = $( 'img', element ).get(0);
 
 				var ulCategorias = $( '.categories', element );
 				var categorias = [];
@@ -47,12 +46,34 @@ function listaFilmes(){
 					sinopse.contains( informacoesField ) 
 				){
 					console.log(elementAno + " == "+ anoField );
-					$( '#resultados-body' ).append( element.outerHTML );
+//					search_youtube_trailer( nome, id );
+					var row = create_result_row( img, nome, sinopse, ulCategorias.get(0), ulAtores.get(0) );
+					$( '#resultados-body' ).append( row );
 				}
 			}
 		);
 	}
 }
+
+function create_result_row( img, titulo, sinopse, categorias, atores  ){
+	var row = "<tr> <td class='col-md-1'>"+img.outerHTML+"</td>"+
+			"<td class='col-md-8'>" +
+				"<h2> "+titulo+" </h2>"+
+				"<p> "+sinopse+" </p>"+
+				"<p> "+categorias.outerHTML+" </p>"+
+				"<p> "+atores.outerHTML+" </p>"+
+				"<p> <button id='trailer' class='btn' onclick='watch_trailer(\""+titulo+"\")' >Assistir Trailer</button> </p>"+
+			"</td> "+
+		  "</tr>";
+	return row; 
+} 
+
+function watch_trailer(titulo){
+	$('popup-content').append('<div> Assistindo Trailer </div>');
+	show_popup( 'popup-content' );
+// 	alert( "Assistindo trailer: "+titulo );
+}
+
 
 function filter_actors( actors, movieActors ){
 	if( actors.length == 1 && actors[0] == "" ) return 1;
@@ -98,34 +119,30 @@ function fillCors(xhr, funcaoCallback, errorCallback){
 }
 
 
-function trailerYoutube(nome){
+function search_youtube_trailer( titulo, div_id ){
+	var nomeFilme= encodeURIComponent( titulo );
+	// chamada na Youtube API 
 
+	var yt_url='http://gdata.youtube.com/feeds/api/videos?q='+nomeFilme+'+trailer&format=5&max-results=1&v=2&alt=jsonc';
+	var request = $.ajax({
+		url: yt_url,
+		type: "GET",
+		dataType: "jsonp",
+	});
+	request.done(function( response ) {
+		$.each(response.data.items, function(i,data){
+			var filme_id=data.id;
+			var filme_title=data.title;
+			console.log( "Trailer "+nomeFilme+"filme_id" );
+			var filmeDiv = $('#'+div_id).get(0);
+			filmeDiv.innerHTML += "<iframe width='210' height='90' src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe>";
+		});
+	});
+	request.fail(function( jqXHR, textStatus ) {
+		console.log( "Youtube search trailler error "+textStatus );
+	});
 
-var nome = $(this).val();
-var nomeFilme= encodeURIComponent(nome);
-// chamada na Youtube API 
-
-var yt_url='http://gdata.youtube.com/feeds/api/videos?q='+nomeFilme+'+trailer&format=5&max-results=1&v=2&alt=jsonc';
-
-/* $.ajax
-({
-type: "GET",
-url: yt_url,
-dataType:"jsonp",
-success: function(response)
-{*/
-
-$.each(response.data.items, function(i,data)
-{
-var filme_id=data.id;
-var filme_title=data.title;
-
-return filme_frame="<span <iframe width='210' height='90' src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe> >";
-
-});
 }
-//});
-//}
 
 function createCORSRequest(method, url) {
 	return createCORSRequest(method, url, true);
@@ -150,4 +167,23 @@ function createCORSRequest(method, url, async) {
 	xhr = null;
 	}
 	return xhr;
+}
+
+
+function show_popup( popup_id ){
+
+	var el = document.getElementById( popup_id + "-overlay" );
+	if( el.style.display == 'none' ) {
+		el.style.display = 'block';
+	}else{
+		el.style.display = 'none';
+	}
+
+	var el = document.getElementById( popup_id + "-content" );
+	if( el.style.display == 'none' ) {
+		el.style.display = 'block';
+	}else{
+		el.style.display = 'none';
+	}
+
 }

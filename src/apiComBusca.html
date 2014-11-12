@@ -1,55 +1,54 @@
 <html>
+	  <body>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<script type="text/javascript">
 
-  <body>
-<script type="text/javascript" src="http://ajax.googleapis.com/
-ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function()
-{
+		$(document).ready(function()
+		{
 
-$(".search_input").keyup(function()
-{
-var search_input = $(this).val();
-var nomeFilme= encodeURIComponent(search_input);
-// chamada na Youtube API 
+		$(".search_input").keyup(function()
+		{
+			var search_input = $(this).val();
+			var nomeFilme= encodeURIComponent(search_input);
+			// chamada na Youtube API 
 
-var yt_url='http://gdata.youtube.com/feeds/api/videos?q='+nomeFilme+'+trailer&format=5&max-results=1&v=2&alt=jsonc';
+			var yt_url='http://gdata.youtube.com/feeds/api/videos?q='+nomeFilme+'+trailer&format=5&max-results=1&v=2&alt=jsonc';
 
-$.ajax
-({
-type: "GET",
-url: yt_url,
-dataType:"jsonp",
-success: function(response)
-{
+			$.ajax
+			({
+			type: "GET",
+			url: yt_url,
+			dataType:"jsonp",
+			success: function(response)
+		{
 
-if(response.data.items)
-{
-$.each(response.data.items, function(i,data)
-{
-var filme_id=data.id;
-var filme_title=data.title;
+		if(response.data.items)
+		{
+		$.each(response.data.items, function(i,data)
+		{
+		var filme_id=data.id;
+		var filme_title=data.title;
 
-var filme_frame="<iframe width='640' height='385' src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe>";
+		var filme_frame="<iframe width='640' height='385' src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe>";
 
-var final="<div id='title'>"+filme_title+"</div><div>"+filme_frame+"</div>";
+		var final="<div id='title'>"+filme_title+"</div><div>"+filme_frame+"</div>";
 
-$("#result").html(final); // Resultado
+		$("#result").html(final); // Resultado
 
-});
-}
-else
-{
-$("#result").html("<div id='no'>Sem trailer disponivel</div>");
-}
-}
-});
-});
-});
-</script>
-<input type="text" class='search_input' />
-<div id="result">
-</div>
+		});
+		}
+		else
+		{
+		$("#result").html("<div id='no'>Sem trailer disponivel</div>");
+		}
+		}
+		});
+		});
+		});
+		</script>
+		<input type="text" class='search_input' />
+		<div id="result">
+		</div>
   </body>
 </html>
 

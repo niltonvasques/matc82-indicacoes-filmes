@@ -19,10 +19,12 @@ function listaFilmes(){
 */
 		$('div', database).each( 
 			function( index, element ){
+				
 				var sinopse = $( '.sinopsis', element ).first().text();
 				var elementAno = $( 'p', element ).first().text();
 				var nome = $( 'h2', element ).text();
 				var img = $( 'img', element ).first();
+				var trailer = trailerYoutube(nome);
 
 				var ulCategorias = $( '.categories', element );
 				var categorias = [];
@@ -95,6 +97,35 @@ function fillCors(xhr, funcaoCallback, errorCallback){
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 }
 
+
+function trailerYoutube(nome){
+
+
+var nome = $(this).val();
+var nomeFilme= encodeURIComponent(nome);
+// chamada na Youtube API 
+
+var yt_url='http://gdata.youtube.com/feeds/api/videos?q='+nomeFilme+'+trailer&format=5&max-results=1&v=2&alt=jsonc';
+
+/* $.ajax
+({
+type: "GET",
+url: yt_url,
+dataType:"jsonp",
+success: function(response)
+{*/
+
+$.each(response.data.items, function(i,data)
+{
+var filme_id=data.id;
+var filme_title=data.title;
+
+return filme_frame="<span <iframe width='210' height='90' src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe> >";
+
+});
+}
+//});
+//}
 
 function createCORSRequest(method, url) {
 	return createCORSRequest(method, url, true);

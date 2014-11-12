@@ -43,4 +43,6 @@
 	text-align: center;
 }
 
-
+.result_row p {
+	 font-weight: bold;
+}

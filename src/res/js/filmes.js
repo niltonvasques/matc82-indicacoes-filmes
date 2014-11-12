@@ -47,7 +47,7 @@ function listaFilmes(){
 				){
 					console.log(elementAno + " == "+ anoField );
 //					search_youtube_trailer( nome, id );
-					var row = create_result_row( img, nome, sinopse, ulCategorias.get(0), ulAtores.get(0) );
+					var row = create_result_row( img, nome, elementAno, sinopse, ulCategorias.get(0), ulAtores.get(0) );
 					$( '#resultados-body' ).append( row );
 				}
 			}
@@ -55,12 +55,15 @@ function listaFilmes(){
 	}
 }
 
-function create_result_row( img, titulo, sinopse, categorias, atores  ){
-	var row = "<tr> <td class='col-md-1'>"+img.outerHTML+"</td>"+
+function create_result_row( img, titulo, ano, sinopse, categorias, atores  ){
+	var row = "<tr class='result_row'> <td class='col-md-1'>"+img.outerHTML+"</td>"+
 			"<td class='col-md-8'>" +
 				"<h2> "+titulo+" </h2>"+
+				"<p > "+ano+" </p>"+
 				"<p> "+sinopse+" </p>"+
+				"<h3 > Categorias </h3>"+
 				"<p> "+categorias.outerHTML+" </p>"+
+				"<h3 > Atores </h3>"+
 				"<p> "+atores.outerHTML+" </p>"+
 				"<p> <button id='trailer' class='btn' onclick='watch_trailer(\""+titulo+"\")' >Assistir Trailer</button> </p>"+
 			"</td> "+

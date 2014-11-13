@@ -11,7 +11,8 @@
     "*.md",
     "AUTHORS.txt",
     "Gruntfile.js",
-    "package.json"
+    "package.json",
+    "src"
   ],
   "devDependencies": {
     "sizzle": "1.10.19",

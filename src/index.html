@@ -3,20 +3,15 @@
 <head>
 	<meta charset="UTF-8"/>
 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
-	<!-- <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
 	
-	<script src="res/js/progress.js" type="text/javascript"></script>
 	<script src="res/js/filmes.js" type="text/javascript"></script>
-	<!-- <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"> -->
 	<link rel="stylesheet" href="res/css/styles.css">
 	
 
 	<title>Sugestões de Filmes</title>
 </head>
-<body>
+<body onload="listaFilmes()" >
 	
 	<div class="canvas">
 		<div class="header">
@@ -82,15 +77,15 @@
 
 		<div id="popup-overlay" class="black_overlay" style="display: none;"></div>
 		<div id="popup-content" class="white_content" style="display: none;">
-			<a href="#" onclick="show_popup('popup')">X</a>
+			<a href="#" onclick="hide_popup('popup')">X</a>
 			<div id="popup-div" > </div>
 		</div>
 
 		<div id="progress-overlay" class="black_overlay" style="display: none;"></div>
-		<div id="progress-content" class="white_content" style="display: none;">
-			<a href="#" onclick="show_popup('popup')">X</a>
+		<div id="progress-content" class="white_content" style="display: none; height:25%;">
 			<div id="popup-div" >
-				<p> Carregando database... </p>
+				<h2> Carregando database... </h2>
+				<img src="res/images/728.GIF" alt="">
 			 </div>
 		</div>
 

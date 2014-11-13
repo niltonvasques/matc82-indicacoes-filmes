@@ -113,11 +113,12 @@ function load_database(){
 		console.log("finished" );
 		database = $('<div></div>');
 		database.html(msg);
-		show_popup( 'progress' );
+		setTimeout( function(){ hide_popup( 'progress' ); }, 2000 );
 	});
 	request.fail(function( jqXHR, textStatus ) {
 		alert( "Request failed: " + textStatus );
-		show_popup( 'progress' );
+		hide_popup( 'progress' );
+		setTimeout( function(){ hide_popup( 'progress' ); }, 2000 );
 	});
 
 }
@@ -185,17 +186,20 @@ function createCORSRequest(method, url, async) {
 function show_popup( popup_id ){
 
 	var el = document.getElementById( popup_id + "-overlay" );
-	if( el.style.display == 'none' ) {
-		el.style.display = 'block';
-	}else{
-		el.style.display = 'none';
-	}
+	el.style.display = 'block';
 
-	var el = document.getElementById( popup_id + "-content" );
-	if( el.style.display == 'none' ) {
-		el.style.display = 'block';
-	}else{
-		el.style.display = 'none';
-	}
+	el = document.getElementById( popup_id + "-content" );
+	el.style.display = 'block';
+
+}
+
+
+function hide_popup( popup_id ){
+
+	var el = document.getElementById( popup_id + "-overlay" );
+	el.style.display = 'none';
+
+	el = document.getElementById( popup_id + "-content" );
+	el.style.display = 'none';
 
 }

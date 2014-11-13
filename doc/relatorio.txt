@@ -1,0 +1,51 @@
+RELATÒRIO DA IMPLEMENTAÇÂO DAS FUNÇÕES
+
+Funções
+
+listaFilmes()
+
+Algoritmo de busca
+
+Com base nos paramêtros fornecidos pelo usuário, é realizada uma busca comparativa na base de filmes, visando encontrar os filmes que coincidirem com todos os parâmetros fornecidos. 
+Entretanto para os parâmetros que podem ser compostos, como atores e categorias, a busca verifica se o filme tem pelo menos 1 dos parâmetros fornecidos.
+
+
+sort_movie()
+
+Todos os filmes encontrados com base nos filtros são então armazenados no array movies_matched, e em seguida é chamada a função sort_movie() que tem por finalidade sortear de maneira aleátoria 
+um dos filmes presentes na lista, e em seguida efetuar a remoção do mesmo, garantindo assim
+que durante a nova indicação, um filme que já foi indicado não apareça novamente.
+
+show_after_search_panel()
+Responsável por exibir o painel de botões de nova indicação e nova busca, e esconder o painel de filtros da busca.
+
+hide_after_search_panel()
+Responsável por esconder o painel de botões de nova indicação e exibir o painel de filtros da busca.
+Responsável também por limpar a indicação da tela.
+
+create_result_row( movie )
+Função que cria em tempo de execução o código html responsável pela estilização da indicação do filme na tela.
+
+watch_trailer( titulo )
+Função que deixou de ser utilizada. Exibe o trailer do filme em um popup na tela do usuário.
+
+filter_actors( actors, movieActors )
+Conta a quantidade de ocorrências dos atores inseridos pelo usuário, em relação ao filme.
+
+filter_categories( categoriaField, categorias )
+Conta a quantidade de ocorrências das categorias.
+
+search_youtube_trailer( titulo, callback )
+Responsável por fazer a requisição ajax do trailer do filme a api do youtube.
+
+show_popup( popup_id )
+Exibe um popup na tela com base na primeira parte do seu id declarado no html.
+
+hide_popup( popup_id ) 
+Esconde um popup com base em parte do seu id declarado no html. Por exemplo o popup progress-content, só necessita receber com parâmetro a parte progress na função.
+
+randomFromInterval( max, min )
+Função que gera um número aleatório dentro do intervalo max e min. Foi utilizada para realizar o sorteio do filme.
+
+
+

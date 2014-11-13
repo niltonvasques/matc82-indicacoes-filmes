@@ -196,12 +196,6 @@ function load_database(){
 }
 
 
-function fillCors(xhr, funcaoCallback, errorCallback){
-  	xhr.onload = funcaoCallback;
-	xhr.onerror = errorCallback;
-	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-}
-
 
 function search_youtube_trailer( titulo, callback ){
 	var nomeFilme= encodeURIComponent( titulo );
@@ -227,31 +221,6 @@ function search_youtube_trailer( titulo, callback ){
 		console.log( "Youtube search trailler error "+textStatus );
 	});
 
-}
-
-function createCORSRequest(method, url) {
-	return createCORSRequest(method, url, true);
-}
-
-function createCORSRequest(method, url, async) {
-//	if (isLocalHost){
-//		if (typeof(netscape) != 'undefined' && typeof(netscape.security) != 'undefined'){
-//			netscape.security.PrivilegeManager.enablePrivilege('UniversalBrowserRead');
-//		}
-//	}
-	var xhr = new XMLHttpRequest();
-	if ("withCredentials" in xhr) {
-	// XHR for Chrome/Firefox/Opera/Safari.
-	xhr.open(method, url, true);
-	} else if (typeof XDomainRequest != "undefined") {
-	// XDomainRequest for IE.
-	xhr = new XDomainRequest();
-	xhr.open(method, url);
-	} else {
-	// CORS not supported.
-	xhr = null;
-	}
-	return xhr;
 }
 
 
@@ -282,15 +251,3 @@ function randomFromInterval(max, min){
          return (Math.random()*(max-min)+min);
 }
 
-function autoResize(id){
-    var newheight;
-    var newwidth;
-
-    if(document.getElementById){
-        newheight=document.getElementById(id).contentWindow.document .body.scrollHeight;
-        newwidth=document.getElementById(id).contentWindow.document .body.scrollWidth;
-    }
-
-    document.getElementById(id).height= (newheight) + "px";
-    document.getElementById(id).width= (newwidth) + "px";
-}

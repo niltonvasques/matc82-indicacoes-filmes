@@ -78,7 +78,18 @@ Autores: Nilton Vasques Carvalho e Vinícius Lins Gesteira
 				</div>
 			</div>
 		</form>
-	
+		<div id="after-search-panel" class="grid-container" style="display: none;">
+			<div class="row">
+				<div class="col-3">
+					<button id="indica-novamente" onclick="sort_movie()" 
+						 class="botaoNormal" type="submit" >Indica outro nas mesmas condições</button>
+				</div>
+				<div class="col-3">
+					<button id="btn-pagina-inicial" onclick="hide_after_search_panel()" 
+						 class="botaoNormal" type="submit" >Iniciar nova busca</button>
+				</div>
+			</div>
+		</div>
 	        <div id="resultados-grid" class="grid-container">
 		</div>
 

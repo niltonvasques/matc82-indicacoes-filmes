@@ -12,6 +12,7 @@ Autores: Nilton Vasques Carvalho e Vinícius Lins Gesteira
 */
 var movies_data = "res/data/movies.html";
 var database = null;
+var movies_matched = [];
 
 function listaFilmes(){
 	var anoField 		= "Ano: " + $('#ano').val();
@@ -26,8 +27,8 @@ function listaFilmes(){
 		show_popup( 'wait' );
 		
 		$( '#resultados-grid' ).empty();
-
-		var movies_matched = [];
+		
+		movies_matched = [];
 /*
 *		Varrendo toda a lista de filmes, através do parser do html.
 */
@@ -71,23 +72,42 @@ function listaFilmes(){
 					}
 				}
 			);
-		 	if( movies_matched.length > 0 ){
-				var random = randomFromInterval( 0, movies_matched.length-1 ) | 0;
-				$( '#resultados-grid' ).append( movies_matched[ random ].row );
-					
-				search_youtube_trailer( movies_matched[ random ].nome, function( filme_id ){
-						var content = $('#trailer');
-						content.empty( );
-						content.append( "<iframe class='youtube' width='640' height='385' align='middle' "+
-									 "src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe>" );
-					}
-				 );
-			}else{
-				$( '#resultados-grid' ).empty();
-				show_popup( 'message' );
-			}	
+		 		
+			sort_movie();
+			show_after_search_panel();
 			hide_popup( 'wait' );
 		}, 500 );
+	}
+}
+
+function show_after_search_panel(){
+	$( '#after-search-panel' ).get(0).style = "display: block;";
+	$( '#search' ).get(0).style = "display: none;";
+}
+
+function hide_after_search_panel(){
+	$( '#after-search-panel' ).get(0).style = "display: none;";
+	$( '#search' ).get(0).style = "display: block;";
+	$( '#resultados-grid' ).empty();
+}
+
+
+function sort_movie(){
+	$( '#resultados-grid' ).empty();
+	if( movies_matched.length > 0 ){
+		var random = randomFromInterval( 0, movies_matched.length-1 ) | 0;
+		$( '#resultados-grid' ).append( movies_matched[ random ].row );
+		
+		search_youtube_trailer( movies_matched[ random ].nome, function( filme_id ){
+				var content = $('#trailer');
+				content.empty( );
+				content.append( "<iframe class='youtube' width='640' height='385' align='middle' "+
+							 "src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe>" );
+			}
+		 );
+	}else{
+		$( '#resultados-grid' ).empty();
+		show_popup( 'message' );
 	}
 }
 
@@ -107,13 +127,15 @@ function create_result_row( movie ){
 		categorias += movie.categorias[i];
 		if( i < movie.categorias.length - 2 ) categorias += ", ";
 	}
+	var atoresTitle = ( movie.atores.length > 1 ? "Atores:" : "Ator:" );
+	var categoriasTitle = ( movie.categorias.length > 1 ? "Categorias:" : "Categoria:" );
 	var row = "<div class='row'>"+
 			"<div class='col-1'>"+movie.img.outerHTML+"</div>"+
 			"<div class='col-5'>" +
 				"<h2> "+movie.nome+" ("+movie.ano+")</h2>"+
 				"<div style='margin-top: 10px;'><b>Sinopse: </b>"+movie.sinopse+" </div>"+
-				"<div style='margin-top: 10px;'> <b>Categorias: </b> "+categorias+"</div>"+
-				"<div style='margin-top: 10px;'> <b>Atores: </b> "+atores+"</div>"+
+				"<div style='margin-top: 10px;'> <b>"+categoriasTitle+" </b> "+categorias+"</div>"+
+				"<div style='margin-top: 10px;'> <b>"+atoresTitle+" </b> "+atores+"</div>"+
 				"<div id='trailer' style='margin-top: 10px;'><div>"+
 			"</div> "+
 		  "</div>";

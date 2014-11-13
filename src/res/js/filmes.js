@@ -15,49 +15,64 @@ function listaFilmes(){
 	        document.getElementById("resultados-header").innerHTML = "<th>CAPA</th><th>DESCRIÇÃO</th>";
 		$( '#resultados-body' ).empty();
 	
-		var movies_choosed = 0;	
+		var movies_matched = [];
 /*
 *		Varrendo toda a lista de filmes, através do parser do html.
 */
 		setTimeout( function() {
 			$('div', database).each( 
 				function( index, element ){
-					if(movies_choosed > 2) return;
+					var movie = new Object();
 
-					var id 	= element.id;	
-					var sinopse = $( '.sinopsis', element ).first().text();
-					var elementAno = $( 'p', element ).first().text();
-					var nome = $( 'h2', element ).text();
-					var img = $( 'img', element ).get(0);
+					movie.id 	= element.id;	
+					movie.sinopse = $( '.sinopsis', element ).first().text();
+					movie.elementAno = $( 'p', element ).first().text();
+					movie.nome = $( 'h2', element ).text();
+					movie.img = $( 'img', element ).get(0);
 
-					var ulCategorias = $( '.categories', element );
-					var categorias = [];
-					$( 'li', ulCategorias).each( function( cIndex, cElement ){
-						categorias.push( cElement.textContent );
+					movie.ulCategorias = $( '.categories', element );
+					movie.categorias = [];
+					$( 'li', movie.ulCategorias).each( function( cIndex, cElement ){
+						movie.categorias.push( cElement.textContent );
 					});
 		
-					var ulAtores = $( '.actors', element );
-					var atores = [];
-					$( 'li', ulAtores).each( function( aIndex, aElement ){
-						atores.push( aElement.textContent.toUpperCase() );
+					movie.ulAtores = $( '.actors', element );
+					movie.atores = [];
+					$( 'li', movie.ulAtores).each( function( aIndex, aElement ){
+						movie.atores.push( aElement.textContent.toUpperCase() );
 					});
 
 					/*
 					* 	Necessário criar a lógica para filtragem melhor dos filmes.
 					* 	Permitindo campos vazios e adição de aleatóriedade.
 					*/				
-					if( 	elementAno.contains( anoField ) && 
-						filter_categories( categoriaField, categorias ) &&
-						filter_actors( atoresField, atores ) > 0 &&
-						sinopse.contains( informacoesField ) 
+					if( 	movie.elementAno.contains( anoField ) && 
+						filter_categories( categoriaField, movie.categorias ) &&
+						filter_actors( atoresField, movie.atores ) > 0 &&
+						movie.sinopse.contains( informacoesField ) 
 					){
-						console.log(elementAno + " == "+ anoField );
-						var row = create_result_row( img, nome, elementAno, sinopse, ulCategorias.get(0), ulAtores.get(0) );
-						$( '#resultados-body' ).append( row );
-						movies_choosed ++;
+						console.log(movie.elementAno + " == "+ anoField );
+						movie.row = create_result_row( movie.img, movie.nome, movie.elementAno, movie.sinopse, movie.ulCategorias.get(0), movie.ulAtores.get(0) );
+						movies_matched.push( movie );	
 					}
 				}
 			);
+		 	if( movies_matched.length > 0 ){
+				var random = randomFromInterval( 0, movies_matched.length-1 ) | 0;
+				$( '#resultados-body' ).append( movies_matched[ random ].row );
+					
+				search_youtube_trailer( movies_matched[ random ].nome, function( filme_id ){
+						var content = $('#trailer');
+						content.empty( );
+						content.append( "<iframe class='youtube' width='640' height='385' align='middle' "+
+									 "src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe>" );
+						show_popup( 'popup' );
+					}
+				 );
+			}else{
+				$( '#resultados-header' ).empty();
+				show_popup( 'message' );
+			}	
 			hide_popup( 'wait' );
 		}, 500 );
 	}
@@ -71,8 +86,16 @@ function create_result_row( img, titulo, ano, sinopse, categorias, atores  ){
 				"<p> "+sinopse+" </p>"+
 				"<h3 > Categorias </h3>"+
 				"<p> "+categorias.outerHTML+" </p>"+
-				"<h3 > Atores </h3>"+
-				"<p> "+atores.outerHTML+" </p>"+
+				"<table>"+
+					"<tr>"+
+					"<td>"+
+					"<h3 > Atores </h3>"+
+					"<p> "+atores.outerHTML+" </p>"+
+					"</td>"+
+					"<td id='trailer'>"+
+					"</td>"+
+					"</tr>"+
+				"</table>"+
 				"<p> <button id='trailer' class='btn' onclick='watch_trailer(\""+titulo+"\")' >Assistir Trailer</button> </p>"+
 			"</td> "+
 		  "</tr>";
@@ -211,4 +234,9 @@ function hide_popup( popup_id ){
 	el.style.display = 'none';
 
 
+}
+
+
+function randomFromInterval(max, min){
+         return (Math.random()*(max-min)+min);
 }

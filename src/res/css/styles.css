@@ -100,3 +100,20 @@ html {
 .result_row p {
 	 font-weight: bold;
 }
+
+.table-normal {
+	margin-top: 10px;
+	border: 1px solid #DDD;
+	border-collapse: collapse;
+}
+
+.table-normal thead tr th {
+	padding: 8px;
+	border: 1px solid #DDD;
+	text-align: left;
+}
+
+.table-normal tbody tr td {
+	padding: 8px;
+	border: 1px solid #DDD;
+}

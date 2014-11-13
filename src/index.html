@@ -70,7 +70,7 @@
 			</div>
 		</form>
 		
-		<table class="table table-stripped table-bordered">
+		<table class="table-normal">
 			<thead id="resultados-header"></thead>
 			<tbody id="resultados-body"></tbody>
 		</table>
@@ -93,6 +93,13 @@
 		<div id="wait-content" class="white_content" style="display: none; height:15%;">
 			<div id="popup-div" >
 				<h2> Aguarde... </h2>
+			 </div>
+		</div>
+		<div id="message-overlay" class="black_overlay" style="display: none;"></div>
+		<div id="message-content" class="white_content" style="display: none; height:10%;">
+			<a href="#" onclick="hide_popup('message')">X</a>
+			<div id="popup-div" >
+				<h2> Nenhum filme foi encontrado! </h2>
 			 </div>
 		</div>
 

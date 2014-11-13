@@ -97,7 +97,6 @@ function sort_movie(){
 	if( movies_matched.length > 0 ){
 		var random = randomFromInterval( 0, movies_matched.length-1 ) | 0;
 		$( '#resultados-grid' ).append( movies_matched[ random ].row );
-		
 		search_youtube_trailer( movies_matched[ random ].nome, function( filme_id ){
 				var content = $('#trailer');
 				content.empty( );
@@ -105,6 +104,8 @@ function sort_movie(){
 							 "src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe>" );
 			}
 		 );
+
+		movies_matched.splice( random, 1 );	
 	}else{
 		$( '#resultados-grid' ).empty();
 		show_popup( 'message' );

@@ -9,7 +9,7 @@
 
 .black_overlay{
         display: none;
-        position: absolute;
+        position: fixed;
         top: 0%;
         left: 0%;
         width: 100%;
@@ -20,20 +20,23 @@
         opacity:.80;
         filter: alpha(opacity=80);
 }
+
 .white_content {
 	display: none;
-	position: absolute;
+	position: fixed;
 	top: 25%;
 	left: 25%;
 	width: 50%;
 	height: 50%;
 	padding: 16px;
-	border: 16px solid orange;
+	border: 2px solid black;
+	border-radius: 10px;
 	background-color: white;
 	z-index:1002;
 	overflow: auto;
 }
 
+<<<<<<< HEAD
 .botaoNormal{
 	height: 34px;
     width: 91px;
@@ -72,3 +75,16 @@
 	box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
 }
 
+=======
+#popup-div{
+	text-align: center;
+}
+
+.youtube {
+	text-align: center;
+}
+
+.result_row p {
+	 font-weight: bold;
+}
+>>>>>>> 1b254553cde21f56816c661433c9feb3ce8a3364

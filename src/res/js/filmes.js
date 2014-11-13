@@ -47,7 +47,7 @@ function listaFilmes(){
 				){
 					console.log(elementAno + " == "+ anoField );
 //					search_youtube_trailer( nome, id );
-					var row = create_result_row( img, nome, sinopse, ulCategorias.get(0), ulAtores.get(0) );
+					var row = create_result_row( img, nome, elementAno, sinopse, ulCategorias.get(0), ulAtores.get(0) );
 					$( '#resultados-body' ).append( row );
 				}
 			}
@@ -55,12 +55,15 @@ function listaFilmes(){
 	}
 }
 
-function create_result_row( img, titulo, sinopse, categorias, atores  ){
-	var row = "<tr> <td class='col-md-1'>"+img.outerHTML+"</td>"+
+function create_result_row( img, titulo, ano, sinopse, categorias, atores  ){
+	var row = "<tr class='result_row'> <td class='col-md-1'>"+img.outerHTML+"</td>"+
 			"<td class='col-md-8'>" +
 				"<h2> "+titulo+" </h2>"+
+				"<p > "+ano+" </p>"+
 				"<p> "+sinopse+" </p>"+
+				"<h3 > Categorias </h3>"+
 				"<p> "+categorias.outerHTML+" </p>"+
+				"<h3 > Atores </h3>"+
 				"<p> "+atores.outerHTML+" </p>"+
 				"<p> <button id='trailer' class='btn' onclick='watch_trailer(\""+titulo+"\")' >Assistir Trailer</button> </p>"+
 			"</td> "+
@@ -69,8 +72,16 @@ function create_result_row( img, titulo, sinopse, categorias, atores  ){
 } 
 
 function watch_trailer(titulo){
-	$('popup-content').append('<div> Assistindo Trailer </div>');
-	show_popup( 'popup-content' );
+	search_youtube_trailer( titulo, function( filme_id ){
+			var content = $('#popup-div');
+			content.empty( );
+			content.append( "<iframe class='youtube' width='640' height='385' align='middle' "+
+						 "src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe>" );
+			show_popup( 'popup' );
+		}
+	 );
+//	$('popup-content').append('<div> Assistindo Trailer </div>');
+//	show_popup( 'popup-content' );
 // 	alert( "Assistindo trailer: "+titulo );
 }
 
@@ -119,7 +130,7 @@ function fillCors(xhr, funcaoCallback, errorCallback){
 }
 
 
-function search_youtube_trailer( titulo, div_id ){
+function search_youtube_trailer( titulo, callback ){
 	var nomeFilme= encodeURIComponent( titulo );
 	// chamada na Youtube API 
 
@@ -134,8 +145,9 @@ function search_youtube_trailer( titulo, div_id ){
 			var filme_id=data.id;
 			var filme_title=data.title;
 			console.log( "Trailer "+nomeFilme+"filme_id" );
-			var filmeDiv = $('#'+div_id).get(0);
-			filmeDiv.innerHTML += "<iframe width='210' height='90' src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe>";
+	//		var filmeDiv = $('#'+div_id).get(0);
+			callback( filme_id );
+	//		filmeDiv.innerHTML += "<iframe width='210' height='90' src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe>";
 		});
 	});
 	request.fail(function( jqXHR, textStatus ) {

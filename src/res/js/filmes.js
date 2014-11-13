@@ -11,47 +11,55 @@ function listaFilmes(){
 		show_popup( 'progress' );
 		setTimeout(function(){load_database();}, 1000);
 	}else{
+		show_popup( 'wait' );
 	        document.getElementById("resultados-header").innerHTML = "<th>CAPA</th><th>DESCRIÇÃO</th>";
 		$( '#resultados-body' ).empty();
-		
+	
+		var movies_choosed = 0;	
 /*
 *		Varrendo toda a lista de filmes, através do parser do html.
 */
-		$('div', database).each( 
-			function( index, element ){
-				var id 	= element.id;	
-				var sinopse = $( '.sinopsis', element ).first().text();
-				var elementAno = $( 'p', element ).first().text();
-				var nome = $( 'h2', element ).text();
-				var img = $( 'img', element ).get(0);
+		setTimeout( function() {
+			$('div', database).each( 
+				function( index, element ){
+					if(movies_choosed > 2) return;
 
-				var ulCategorias = $( '.categories', element );
-				var categorias = [];
-				$( 'li', ulCategorias).each( function( cIndex, cElement ){
-					categorias.push( cElement.textContent );
-				});
-	
-				var ulAtores = $( '.actors', element );
-				var atores = [];
-				$( 'li', ulAtores).each( function( aIndex, aElement ){
-					atores.push( aElement.textContent.toUpperCase() );
-				});
-/*
-*				Necessário criar a lógica para filtragem melhor dos filmes.
-*				Permitindo campos vazios e adição de aleatóriedade.
-*/				
-				if( 	elementAno.contains( anoField ) && 
-					filter_categories( categoriaField, categorias ) &&
-					filter_actors( atoresField, atores ) > 0 &&
-					sinopse.contains( informacoesField ) 
-				){
-					console.log(elementAno + " == "+ anoField );
-//					search_youtube_trailer( nome, id );
-					var row = create_result_row( img, nome, elementAno, sinopse, ulCategorias.get(0), ulAtores.get(0) );
-					$( '#resultados-body' ).append( row );
+					var id 	= element.id;	
+					var sinopse = $( '.sinopsis', element ).first().text();
+					var elementAno = $( 'p', element ).first().text();
+					var nome = $( 'h2', element ).text();
+					var img = $( 'img', element ).get(0);
+
+					var ulCategorias = $( '.categories', element );
+					var categorias = [];
+					$( 'li', ulCategorias).each( function( cIndex, cElement ){
+						categorias.push( cElement.textContent );
+					});
+		
+					var ulAtores = $( '.actors', element );
+					var atores = [];
+					$( 'li', ulAtores).each( function( aIndex, aElement ){
+						atores.push( aElement.textContent.toUpperCase() );
+					});
+
+					/*
+					* 	Necessário criar a lógica para filtragem melhor dos filmes.
+					* 	Permitindo campos vazios e adição de aleatóriedade.
+					*/				
+					if( 	elementAno.contains( anoField ) && 
+						filter_categories( categoriaField, categorias ) &&
+						filter_actors( atoresField, atores ) > 0 &&
+						sinopse.contains( informacoesField ) 
+					){
+						console.log(elementAno + " == "+ anoField );
+						var row = create_result_row( img, nome, elementAno, sinopse, ulCategorias.get(0), ulAtores.get(0) );
+						$( '#resultados-body' ).append( row );
+						movies_choosed ++;
+					}
 				}
-			}
-		);
+			);
+			hide_popup( 'wait' );
+		}, 500 );
 	}
 }
 
@@ -201,5 +209,6 @@ function hide_popup( popup_id ){
 
 	el = document.getElementById( popup_id + "-content" );
 	el.style.display = 'none';
+
 
 }

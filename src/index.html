@@ -19,13 +19,13 @@
 			<h4>Quer assistir um filme e não sabe qual?</h4>
 		</div>
 		<form id="search" class="form-vertical" onsubmit="return false" role="form">
-			<div id="search" class="form-group" >
+			<div id="search" class="grid-container" >
 				<div class="row">
-					<div class="col-sm-5">
+					<div class="col-3">
 						<p>Ano</p>
 						<input id="ano" class="formHorizontal" type="number">
 					</div>
-					<div class="col-sm-5">
+					<div class="col-3">
 						<p>Categoria</p>
 						<select id="categoria" name="Categoria" type="text">
 							 <option value="Todas">Todas</option>
@@ -50,30 +50,30 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-5">
+					<div class="col-3">
 						<p>Atores</p>
 						<input id="atores" class="formHorizontal" type="text">
 					</div>
-					<div class="col-sm-5">
+					<div class="col-3">
 						<p>Informações</p>
 						<input id="informacoes" class="formHorizontal" type="text">
 					</div>
 				</div>
-				<br>
 				<div class="row">
-					<div class="col-sm-1">
-						<button id="indica" onclick="listaFilmes()" class="botaoNormal" type="submit" >Indicamos</button>
-						<!-- 						<button id="indica" onclick="listaFilmes()" class="btn btn-primary" type="submit" >Indicamos</button>
- -->
+					<div class="col-6">
+						<button id="indica" onclick="listaFilmes()"
+							 class="botaoNormal" type="submit" >Indicamos</button>
 					</div>
 				</div>
 			</div>
 		</form>
-		
-		<table class="table-normal">
+	
+	        <div id="resultados-grid" class="grid-container">
+		</div>
+		<!-- <table class="table-normal">
 			<thead id="resultados-header"></thead>
 			<tbody id="resultados-body"></tbody>
-		</table>
+		</table> -->
 
 		<div id="popup-overlay" class="black_overlay" style="display: none;"></div>
 		<div id="popup-content" class="white_content" style="display: none;">
@@ -96,7 +96,7 @@
 			 </div>
 		</div>
 		<div id="message-overlay" class="black_overlay" style="display: none;"></div>
-		<div id="message-content" class="white_content" style="display: none; height:10%;">
+		<div id="message-content" class="white_content" style="display: none; height:20%;">
 			<a href="#" onclick="hide_popup('message')">X</a>
 			<div id="popup-div" >
 				<h2> Nenhum filme foi encontrado! </h2>

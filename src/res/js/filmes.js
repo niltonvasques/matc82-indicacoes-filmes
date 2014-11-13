@@ -12,9 +12,9 @@ function listaFilmes(){
 		setTimeout(function(){load_database();}, 1000);
 	}else{
 		show_popup( 'wait' );
-	        document.getElementById("resultados-header").innerHTML = "<th>CAPA</th><th>DESCRIÇÃO</th>";
-		$( '#resultados-body' ).empty();
-	
+		
+		$( '#resultados-grid' ).empty();
+
 		var movies_matched = [];
 /*
 *		Varrendo toda a lista de filmes, através do parser do html.
@@ -59,18 +59,17 @@ function listaFilmes(){
 			);
 		 	if( movies_matched.length > 0 ){
 				var random = randomFromInterval( 0, movies_matched.length-1 ) | 0;
-				$( '#resultados-body' ).append( movies_matched[ random ].row );
+				$( '#resultados-grid' ).append( movies_matched[ random ].row );
 					
 				search_youtube_trailer( movies_matched[ random ].nome, function( filme_id ){
 						var content = $('#trailer');
 						content.empty( );
 						content.append( "<iframe class='youtube' width='640' height='385' align='middle' "+
 									 "src='http://www.youtube.com/embed/"+filme_id+"' frameborder='1' type='text/html'></iframe>" );
-						show_popup( 'popup' );
 					}
 				 );
 			}else{
-				$( '#resultados-header' ).empty();
+				$( '#resultados-grid' ).empty();
 				show_popup( 'message' );
 			}	
 			hide_popup( 'wait' );
@@ -79,10 +78,11 @@ function listaFilmes(){
 }
 
 function create_result_row( img, titulo, ano, sinopse, categorias, atores  ){
-	var row = "<tr class='result_row'> <td class='col-md-1'>"+img.outerHTML+"</td>"+
-			"<td class='col-md-8'>" +
+	var row = "<div class='row'>"+
+			"<div class='col-1'>"+img.outerHTML+"</div>"+
+			"<div class='col-5'>" +
 				"<h2> "+titulo+" </h2>"+
-				"<p > "+ano+" </p>"+
+				"<h3 > "+ano+" </h3>"+
 				"<p> "+sinopse+" </p>"+
 				"<h3 > Categorias </h3>"+
 				"<p> "+categorias.outerHTML+" </p>"+
@@ -96,9 +96,8 @@ function create_result_row( img, titulo, ano, sinopse, categorias, atores  ){
 					"</td>"+
 					"</tr>"+
 				"</table>"+
-				"<p> <button id='trailer' class='btn' onclick='watch_trailer(\""+titulo+"\")' >Assistir Trailer</button> </p>"+
-			"</td> "+
-		  "</tr>";
+			"</div> "+
+		  "</div>";
 	return row; 
 } 
 

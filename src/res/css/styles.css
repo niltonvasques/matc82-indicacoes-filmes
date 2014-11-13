@@ -3,6 +3,10 @@ html {
     background-color: #CCC;
 }
 
+body * {
+    box-sizing: border-box;
+}
+
 .header {
 	text-align: center;
 }
@@ -67,6 +71,11 @@ html {
 	background: linear-gradient(top, #3d7a80, #2f5f63);
 }
 
+
+.form-vertical {
+	text-align: center;
+}
+
 .formHorizontal {
 	display: block;
 	width: 100%;
@@ -90,15 +99,73 @@ html {
 	box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
 }
 
-.row{
-	display:table-cell;
-	overflow:hidden;
-    position: block;
-    z-index: -1;
-    padding-top: 3px;
+/*  GRID SYSTEM RESPONSIVE START */
+
+.grid-container{
+	width: 100%; 
+	box-sizing: border-box; 
+	max-width: 1400px;     
+	margin-left: auto; 
+	margin-right: auto; 
 
 }
 
+/*-- our cleafix hack -- */ 
+.row:before, 
+.row:after {
+    content:"";
+    display: table ;
+    clear:both;
+}
+
+[class*='col-'] {
+    float: left; 
+    min-height: 1px; 
+    width: 16.66%; 
+    /*-- our gutter -- */
+    padding: 12px; 
+   /* background-color: #FFDCDC; */
+}
+
+.col-1{ width: 16.66%; }
+.col-2{ width: 33.33%; }
+.col-3{ width: 50%;    }
+.col-4{ width: 66.66%; }
+.col-5{ width: 83.33%; }
+.col-6{ width: 100%;   }
+
+.outline, .outline *{
+    outline: 1px solid #F6A1A1; 
+}
+
+
+/*-- some extra column content styling --*/
+[class*='col-'] > p {
+ background-color: #DDD; 
+ padding: 0;
+ margin: 0;
+ text-align: center; 
+ /* color: white;  */
+}
+
+@media all and (max-width:800px){
+    .col-1{ width: 33.33%;  }
+    .col-2{ width: 50%;     }
+    .col-3{ width: 83.33%;  }
+    .col-4{ width: 100%;    }
+    .col-5{ width: 100%;    }
+    .col-6{ width: 100%;    }
+
+    .row .col-2:last-of-type{
+        width: 100%; 
+    }
+
+    .row .col-5 ~ .col-1{
+        width: 100%; 
+    }
+}
+
+/*  GRID SYSTEM RESPONSIVE END */
 
 
 #popup-div{

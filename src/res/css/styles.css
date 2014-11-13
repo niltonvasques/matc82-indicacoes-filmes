@@ -14,7 +14,7 @@
 
 #categoria {
 	width: 100%;
-	
+
 }
 
 .black_overlay{
@@ -44,6 +44,7 @@
 	background-color: white;
 	z-index:1002;
 	overflow: auto;
+	display:inline;
 }
 
 .botaoNormal{
@@ -83,6 +84,17 @@
 	-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
 	box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
 }
+
+.row{
+	display:table-cell;
+	overflow:hidden;
+    position: block;
+    z-index: -1;
+    padding-top: 3px;
+
+}
+
+
 
 #popup-div{
 	text-align: center;

@@ -8,7 +8,7 @@ function listaFilmes(){
 	var informacoesField 	= $( '#informacoes' ).val().split(" ");
 
 	if(database == null){
-		progress.showPleaseWait();
+		show_popup( 'progress' );
 		setTimeout(function(){load_database();}, 1000);
 	}else{
 	        document.getElementById("resultados-header").innerHTML = "<th>CAPA</th><th>DESCRIÇÃO</th>";
@@ -113,11 +113,11 @@ function load_database(){
 		console.log("finished" );
 		database = $('<div></div>');
 		database.html(msg);
-		progress.hidePleaseWait();
+		show_popup( 'progress' );
 	});
 	request.fail(function( jqXHR, textStatus ) {
 		alert( "Request failed: " + textStatus );
-		progress.hidePleaseWait();
+		show_popup( 'progress' );
 	});
 
 }

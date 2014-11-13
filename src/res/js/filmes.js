@@ -42,6 +42,8 @@ function listaFilmes(){
 					movie.nome = $( 'h2', element ).text();
 					movie.img = $( 'img', element ).get(0);
 
+					movie.ano = movie.elementAno.split(" ")[1];
+
 					movie.ulCategorias = $( '.categories', element );
 					movie.categorias = [];
 					$( 'li', movie.ulCategorias).each( function( cIndex, cElement ){
@@ -51,7 +53,7 @@ function listaFilmes(){
 					movie.ulAtores = $( '.actors', element );
 					movie.atores = [];
 					$( 'li', movie.ulAtores).each( function( aIndex, aElement ){
-						movie.atores.push( aElement.textContent.toUpperCase() );
+						movie.atores.push( aElement.textContent );
 					});
 
 					/*
@@ -64,7 +66,7 @@ function listaFilmes(){
 						movie.sinopse.contains( informacoesField ) 
 					){
 						console.log(movie.elementAno + " == "+ anoField );
-						movie.row = create_result_row( movie.img, movie.nome, movie.elementAno, movie.sinopse, movie.ulCategorias.get(0), movie.ulAtores.get(0) );
+						movie.row = create_result_row( movie );
 						movies_matched.push( movie );	
 					}
 				}
@@ -89,25 +91,30 @@ function listaFilmes(){
 	}
 }
 
-function create_result_row( img, titulo, ano, sinopse, categorias, atores  ){
+function create_result_row( movie ){
+	
+	if( !movie.img.src.contains("movies_images") ){
+		movie.img.src = "res/images/movie.png" ;
+	}
+	movie.img.style  = "width: 100%;";
+	var atores = "";
+	for( var i = 0; i < movie.atores.length; i++ ){
+		atores += movie.atores[i];
+		if( i < movie.atores.length - 2 ) atores += ", ";
+	}
+	var categorias = "";
+	for( var i = 0; i < movie.categorias.length; i++ ){
+		categorias += movie.categorias[i];
+		if( i < movie.categorias.length - 2 ) categorias += ", ";
+	}
 	var row = "<div class='row'>"+
-			"<div class='col-1'>"+img.outerHTML+"</div>"+
+			"<div class='col-1'>"+movie.img.outerHTML+"</div>"+
 			"<div class='col-5'>" +
-				"<h2> "+titulo+" </h2>"+
-				"<h3 > "+ano+" </h3>"+
-				"<p> "+sinopse+" </p>"+
-				"<h3 > Categorias </h3>"+
-				"<p> "+categorias.outerHTML+" </p>"+
-				"<table>"+
-					"<tr>"+
-					"<td>"+
-					"<h3 > Atores </h3>"+
-					"<p> "+atores.outerHTML+" </p>"+
-					"</td>"+
-					"<td id='trailer'>"+
-					"</td>"+
-					"</tr>"+
-				"</table>"+
+				"<h2> "+movie.nome+" ("+movie.ano+")</h2>"+
+				"<div style='margin-top: 10px;'><b>Sinopse: </b>"+movie.sinopse+" </div>"+
+				"<div style='margin-top: 10px;'> <b>Categorias: </b> "+categorias+"</div>"+
+				"<div style='margin-top: 10px;'> <b>Atores: </b> "+atores+"</div>"+
+				"<div id='trailer' style='margin-top: 10px;'><div>"+
 			"</div> "+
 		  "</div>";
 	return row; 
@@ -250,4 +257,17 @@ function hide_popup( popup_id ){
 
 function randomFromInterval(max, min){
          return (Math.random()*(max-min)+min);
+}
+
+function autoResize(id){
+    var newheight;
+    var newwidth;
+
+    if(document.getElementById){
+        newheight=document.getElementById(id).contentWindow.document .body.scrollHeight;
+        newwidth=document.getElementById(id).contentWindow.document .body.scrollWidth;
+    }
+
+    document.getElementById(id).height= (newheight) + "px";
+    document.getElementById(id).width= (newwidth) + "px";
 }

@@ -1,3 +1,15 @@
+/*
+
+Universidade Federal da Bahia
+Disciplina: Sistemas Web - MATC82
+Prof. Leandro Andrade
+Semestre: 2014.2
+
+Trabalho Prático 1
+
+Autores: Nilton Vasques Carvalho e Vinícius Lins Gesteira
+
+*/
 html {
     margin: 0px;
     background-color: #CCC;
@@ -58,10 +70,10 @@ body * {
 
 .botaoNormal{
 	height: 34px;
-    width: 91px;
-    color: #FFF;
-    background-color: #3071A9;
-    border-color: #285E8E;
+	width: 91px;
+	color: #FFF;
+	background-color: #3071A9;
+	border-color: #285E8E;
 }
 
 .botaoNormal.hover{

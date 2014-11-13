@@ -1,3 +1,15 @@
+/*
+
+Universidade Federal da Bahia
+Disciplina: Sistemas Web - MATC82
+Prof. Leandro Andrade
+Semestre: 2014.2
+
+Trabalho Prático 1
+
+Autores: Nilton Vasques Carvalho e Vinícius Lins Gesteira
+
+*/
 var movies_data = "res/data/movies.html";
 var database = null;
 

@@ -121,12 +121,12 @@ function create_result_row( movie ){
 	var atores = "";
 	for( var i = 0; i < movie.atores.length; i++ ){
 		atores += movie.atores[i];
-		if( i < movie.atores.length - 2 ) atores += ", ";
+		if( i < movie.atores.length - 1 ) atores += ", ";
 	}
 	var categorias = "";
 	for( var i = 0; i < movie.categorias.length; i++ ){
 		categorias += movie.categorias[i];
-		if( i < movie.categorias.length - 2 ) categorias += ", ";
+		if( i < movie.categorias.length - 1 ) categorias += ", ";
 	}
 	var atoresTitle = ( movie.atores.length > 1 ? "Atores:" : "Ator:" );
 	var categoriasTitle = ( movie.categorias.length > 1 ? "Categorias:" : "Categoria:" );
